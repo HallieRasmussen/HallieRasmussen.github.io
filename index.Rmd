@@ -9,6 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Test
 
-## [Resume]("/Users/halli/Downloads/Website/HallieRasmussen.github.io/Resume.pdf.pdf") |[BIOL-3100-Final-Project]("/Users/halli/Downloads/Website/HallieRasmussen.github.io/Final.project.Rmd") ##
+## [Resume](./resume/Resume.pdf.pdf) |[BIOL-3100-Final-Project](./projects/Final.project.html) ##
 
 
