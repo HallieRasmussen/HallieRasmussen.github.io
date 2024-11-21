@@ -1,5 +1,5 @@
 ---
-title: "Hallie Rasmussen"
+title: " "
 output: html_document
 ---
 
@@ -10,4 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## [Resume](./resume/Resume.pdf.pdf) |[BIOL-3100-Final-Project](./projects/Final.project.html) ##
 
+## Hallie Rasmussen ##
+
+<img src="./Hallie 2022 (97) (1).JPG" alt="A beautiful mountain" width="250" height="300"/>
 
