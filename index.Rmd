@@ -7,7 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Test
 
 ## [Resume](./resume/Resume.pdf.pdf) |[BIOL-3100-Final-Project](./projects/Final.project.html) ##
 
