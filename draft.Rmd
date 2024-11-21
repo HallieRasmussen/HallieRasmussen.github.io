@@ -1,0 +1,11 @@
+---
+title: "Hallie Rasmussen"
+output: html_document
+date: "2024-11-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## [Resume]("/Users/halli/Downloads/Website/HallieRasmussen.github.io/Resume.pdf.pdf") |[BIOL-3100-Final-Project]("/Users/halli/Downloads/Website/HallieRasmussen.github.io/Final.project.Rmd") ##
