@@ -1,5 +1,5 @@
 ---
-title: "Final Project"
+title: "Final Project: Mercury Concentrations in Bat Tissues and Blood"
 output: html_document
 ---
 
@@ -7,22 +7,144 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+<div style="height: 0.5px;"></div>
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Introduction
+The data for this study was obtained in order to assess the accumulation of mercury in bats from Southwestern United States National Parks.This research will contribute to the understanding of mercury dynamics in terrestrial ecosystems.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Background
+Mercury is an environmental contaminant that poses significant risks to wildlife and human health. It is usually released into the environment through natural processes, like volcanic eruptions, and human activities, such as industrial processes, coal combustion, and mining. Once it is in the environment, mercury can be transformed into methyl-mercury, a highly toxic form that bio-accumulates in the food web. 
 
-```{r cars}
-summary(cars)
+Bats are particularly vulnerable to mercury contamination due to their long lifespan and high placement in trophic levels. They act as important indicators for environmental health because their feeding habits and wide-rang foraging behavior can reflect the ecosystem's contamination levels. 
+
+This project aims to investigate the concentrations of mercury in bat tissue and blood samples collected from various locations. The data-set includes measurements of mercury concentrations in different parts of the bat expressed in nanograms per gram of dry weight (ng/g dw).
+This research will inform conservation strategies for bat populations and other wildlife affected by mercury pollution. 
+
+By analyzing this data, we aim to:<br>
+-Assess the levels of mercury contamination in bat populations.<br>
+-Evaluate the potential health risks to bat populations and, by  extension, to the ecosystems they inhabit.<br>
+-Identify potential sources of mercury exposure.<br>
+-Understand the spatial distribution of mercury contamination.
+
+
+## Methods
+The methods for this project involved analyzing a data set with functions in RStudio. Multiple graphs were created to compare the variables that were measured in the data-set. 
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(skimr)
+library(dplyr)
+library(easystats)
+library(modelr)
+library(broom)
+library(patchwork)
+
+
+bat.dat = read.csv("C:/Users/halli/Downloads/Website/HallieRasmussen.github.io/NPS Bat Hg_2023_Data.csv")
+invisible(skim(bat.dat))
+invisible(head(bat.dat))
+invisible(colnames(bat.dat))
+
+keepers = c("CommonName","WingPunch_MeHg_ng.g_dw", "WholeBlood_THg_ng.g_ww",
+            "Sex", "CollectionDate", "NationalParkUnit")
+
+clean.bat.dat = bat.dat %>%
+  select(all_of(keepers), "WingPunch_MeHg_ng.g_dw", "WholeBlood_THg_ng.g_ww") %>%
+  rename(Tissue_Methyl_Hg = WingPunch_MeHg_ng.g_dw,
+         Blood_Total_Hg = WholeBlood_THg_ng.g_ww)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+#### Plots of Mercury Concentration vs Location
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot.1 = clean.bat.dat %>%
+  ggplot(aes(x = Tissue_Methyl_Hg, y = NationalParkUnit, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Hg Concentration in Tissue',
+       y = 'National Park Unit') +
+  theme(axis.text.y = element_text(angle = 25))
+plot.1
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+plot.2 = clean.bat.dat %>%
+  ggplot(aes(x = Blood_Total_Hg, y = NationalParkUnit, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Hg Concentration in Blood',
+       y = 'National Park Unit') +
+  theme(axis.text.y = element_text(angle = 25))
+plot.2
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+<div style="height: 2px;"></div>
+
+#### Plots of Mercury Concentration vs Time
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot.3 = clean.bat.dat %>%
+  ggplot(aes(x = CollectionDate, y = Tissue_Methyl_Hg, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Collection Date',
+       y = 'Hg Concentration in Tissue')
+plot.3
+
+
+plot.4 = clean.bat.dat %>%
+  ggplot(aes(x = CollectionDate, y = Blood_Total_Hg, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Collection Date',
+       y = 'Hg Concentration in Blood')
+plot.4
+```
+
+<div style="height: 2px;"></div>
+
+#### Plots of Mercury Concentration vs Species
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot.5 = clean.bat.dat %>%
+  ggplot(aes(x = CommonName, y = Tissue_Methyl_Hg, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Species Common Name',
+       y = 'Hg Concentration in Tissue') +
+  theme(axis.text.x = element_text(angle = 20))
+plot.5
+
+
+plot.6 = clean.bat.dat %>%
+  ggplot(aes(x = CommonName, y = Blood_Total_Hg, fill = Sex)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = 'Species Common Name',
+       y = 'Hg Concentration in Blood') + 
+  theme(axis.text.x = element_text(angle = 20))
+plot.6
+```
+
+<div style="height: 2px;"></div>
+
+#### Analysis of Significance
+```{r}
+sd(clean.bat.dat$Tissue_Methyl_Hg, na.rm = TRUE)
+sd(clean.bat.dat$Blood_Total_Hg, na.rm = TRUE)
+```
+
+```{r, echo=FALSE}
+t.test(clean.bat.dat$Tissue_Methyl_Hg)
+t.test(clean.bat.dat$Blood_Total_Hg)
+
+summary(clean.bat.dat)
+```
+
+<div style="height: 3px;"></div>
+
+## Discussion
+The analysis of mercury concentrations in bat tissue and blood revealed significant levels of mercury contamination across the sampled populations. The mean concentration of methyl-mercury in tissue samples was found to be 95.07 ng/g dw, while blood samples showed a mean concentration of 70.64 ng/g dw. These finding indicate that bats are accumulating mercury in their tissues. 
+
+Elevated mercury levels in bat populations raises concerns about their health and long-term survival. Mercury exposure can increase bats' mortality rates, impair their neurological functions, and reduce reproductive success. Given the ecological importance of bats as pollinators, seed dispersers, and insect regulators, their decline could have cascading effects on the health and biodiversity of the ecosystem.
+
+Although this study provides important insights into mercury contamination in bats, there are several limitations. The sample size was relatively small and the study was conducted over a limited geographic range. Future research should aim to include a larger sample size and cover a broader range of locations to better understand the extent of mercury contamination. Also, studies to investigate the specific pathways of mercury exposure and the long-term health effects on bat populations would grant further helpful insight. 
+
+<div style="height: 20px;"></div>
