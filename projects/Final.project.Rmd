@@ -40,7 +40,7 @@ library(broom)
 library(patchwork)
 
 
-bat.dat = read.csv("C:/Users/halli/Downloads/Website/HallieRasmussen.github.io/NPS Bat Hg_2023_Data.csv")
+bat.dat = read.csv("C:/Users/halli/Downloads/Website/HallieRasmussen.github.io/Projects/NPS Bat Hg_2023_Data.csv")
 invisible(skim(bat.dat))
 invisible(head(bat.dat))
 invisible(colnames(bat.dat))
