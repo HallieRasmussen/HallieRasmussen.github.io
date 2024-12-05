@@ -12,10 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Hallie Rasmussen ##
 
-<img src="./Hallie 2022 (97) (1).JPG" alt="Profile Picture" width="270" height="300"/>
+<img src="./Hallie 2022 (97) (1).JPG" alt="Profile Picture" width="351" height="390"/>
 
 ```{css, echo=FALSE}
-body {
+background <- FALSE
+background = body {
   background-image: url("./Projects/starry-night-sky.jpg");
   background-size: cover;
   background-position: center;
